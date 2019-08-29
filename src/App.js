@@ -36,10 +36,17 @@ class Card extends React.Component {
 }
 
 class Form extends React.Component {
+
+  handleClick = (event) => {
+    event.preventDefault();
+    console.log(this.useNameInput);
+  }
+  useNameInput=React.createRef();
+
   render() {
     return (
-      <form action="">
-        <input type="text" placeholder="Github uersmae"></input>
+      <form action="" onSubmit={this.handleClick}>
+        <input type="text" placeholder="Github uersmae" ref={this.useNameInput}></input>
         <button>Add New Card</button>
       </form>
     )
