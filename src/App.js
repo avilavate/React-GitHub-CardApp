@@ -1,29 +1,28 @@
 import React from 'react';
 import './App.css';
 
-const CardList = (props) => (
-	<div>
-  	{props.CardData.map(profile => <Card testData={profile}/>)}
-	</div>
-);
+class CardList extends React.Component {
+  render() {
+    return (<div>
+      {this.props.CardData.map(profile => <Card key={profile.id} testdata={profile} />)};
+    </div>);
+  }
+}
 
 class Card extends React.Component {
 
   constructor(props) {
     super(props);
     console.log(this.props.testData);
-    // this.name = this.props.testData.name;
-    // this.avatar_url = props.testData.avatar_url;
-    // this.company = props.testData.company;
     this.state = {
-      testData: this.props.testData
+      testData: this.props.testdata
     };
 
   }
 
 
   render() {
-    console.log(this,this.props.testData);
+    //const profile=this.testData[0];
     return (<div className="github-profile">
       <img src={this.state.testData.avatar_url} style={{ width: '75px' }} />
       <div className="info">
@@ -71,12 +70,6 @@ class Form extends React.Component {
 }
 
 class App extends React.Component {
-  // testData = [
-  //   { name: "Dan Abramov", avatar_url: "https://avatars0.githubusercontent.com/u/810438?v=4", company: "@facebook" },
-  //   { name: "Sophie Alpert", avatar_url: "https://avatars2.githubusercontent.com/u/6820?v=4", company: "Humu" },
-  //   { name: "Sebastian Markbåge", avatar_url: "https://avatars2.githubusercontent.com/u/63648?v=4", company: "Facebook" },
-  // ];
-
   constructor(props) {
     super(props);
     this.state = {
@@ -85,7 +78,7 @@ class App extends React.Component {
   }
 
   getUsers = (profile) => {
-    this.setState({ 
+    this.setState({
       testData: this.state.testData.concat([profile])
     })
     console.log(this.state.testData);
