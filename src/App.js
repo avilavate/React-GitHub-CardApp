@@ -1,34 +1,34 @@
 import React from 'react';
 import './App.css';
 
-const CardList = (props) => {
-  return (
-    <div>
-      {props.testData.map(profile => {
-        return (<Card {...profile} />);
-      })}
-    </div>
-  );
-}
+const CardList = (props) => (
+	<div>
+  	{props.CardData.map(profile => <Card testData={profile}/>)}
+	</div>
+);
 
 class Card extends React.Component {
 
   constructor(props) {
     super(props);
-    this.name = props.name;
-    this.avatar_url = props.avatar_url;
-    this.company = props.company;
+    console.log(this.props.testData);
+    // this.name = this.props.testData.name;
+    // this.avatar_url = props.testData.avatar_url;
+    // this.company = props.testData.company;
+    this.state = {
+      testData: this.props.testData
+    };
 
   }
 
 
   render() {
-    //const profile=this.testData[0];
+    console.log(this,this.props.testData);
     return (<div className="github-profile">
-      <img src={this.avatar_url} style={{ width: '75px' }} />
+      <img src={this.state.testData.avatar_url} style={{ width: '75px' }} />
       <div className="info">
-        <div className="name">{this.name}</div>
-        <div className="company">{this.company}</div>
+        <div className="name">{this.state.testData.name}</div>
+        <div className="company">{this.state.testData.company}</div>
       </div>
     </div>
     );
@@ -39,8 +39,18 @@ class Form extends React.Component {
 
   handleClick = (event) => {
     event.preventDefault();
-    console.log(this.state.useNameInput);
+    this.getGitHubUser();
   }
+  constructor(props) {
+    super(props);
+  }
+
+  getGitHubUser = async () => {
+    //console.log("called");
+    let response = await fetch('https://api.github.com/users/' + this.state.useNameInput);
+    let profile = await response.json()
+    this.props.onSubmit(profile);
+  };
   //useNameInput=React.createRef();
   state = { useNameInput: '' };
   render() {
@@ -61,25 +71,33 @@ class Form extends React.Component {
 }
 
 class App extends React.Component {
-  testData = [
-    { name: "Dan Abramov", avatar_url: "https://avatars0.githubusercontent.com/u/810438?v=4", company: "@facebook" },
-    { name: "Sophie Alpert", avatar_url: "https://avatars2.githubusercontent.com/u/6820?v=4", company: "Humu" },
-    { name: "Sebastian Markbåge", avatar_url: "https://avatars2.githubusercontent.com/u/63648?v=4", company: "Facebook" },
-  ];
+  // testData = [
+  //   { name: "Dan Abramov", avatar_url: "https://avatars0.githubusercontent.com/u/810438?v=4", company: "@facebook" },
+  //   { name: "Sophie Alpert", avatar_url: "https://avatars2.githubusercontent.com/u/6820?v=4", company: "Humu" },
+  //   { name: "Sebastian Markbåge", avatar_url: "https://avatars2.githubusercontent.com/u/63648?v=4", company: "Facebook" },
+  // ];
 
   constructor(props) {
     super(props);
     this.state = {
-      testData: this.testData
+      testData: []
     }
   }
 
+  getUsers = (profile) => {
+    this.setState({ 
+      testData: this.state.testData.concat([profile])
+    })
+    console.log(this.state.testData);
+  }
+
   render() {
+    console.log(this.state.testdata);
     return (
       <div>
         <div className="header">The GitHub Cards App</div>
-        <Form></Form>
-        <CardList testData={this.state.testData} />
+        <Form onSubmit={this.getUsers}></Form>
+        <CardList CardData={this.state.testData} />
       </div>
     );
   }
