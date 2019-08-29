@@ -39,14 +39,21 @@ class Form extends React.Component {
 
   handleClick = (event) => {
     event.preventDefault();
-    console.log(this.useNameInput);
+    console.log(this.state.useNameInput);
   }
-  useNameInput=React.createRef();
-
+  //useNameInput=React.createRef();
+  state = { useNameInput: '' };
   render() {
     return (
       <form action="" onSubmit={this.handleClick}>
-        <input type="text" placeholder="Github uersmae" ref={this.useNameInput}></input>
+        <input
+          type="text"
+          placeholder="Github uersmae"
+          value={this.state.useNameInput}
+          onChange={event => this.setState({ useNameInput: event.target.value })}
+          required
+        >
+        </input>
         <button>Add New Card</button>
       </form>
     )
