@@ -9,6 +9,7 @@ const CardList =(props)=> {
  
  return(
    <div>
+     <Form></Form>
  <Card {...props.testData[0]}/>
  <Card {...props.testData[1]}/>
  <Card {...props.testData[2]}/>
@@ -37,6 +38,17 @@ class Card extends React.Component {
         </div>
     	</div>
     );
+  }
+}
+
+class Form extends React.Component{
+  render(){
+    return(
+      <form action="">
+        <input type="text" placeholder="Github uersmae"></input>
+        <button>Add New Card</button>
+      </form>
+    )
   }
 }
 
