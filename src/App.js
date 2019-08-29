@@ -6,9 +6,7 @@ import './App.css';
 
 const CardList =(props)=> {
  return(
-   <div>
-     <Form></Form>
-     
+   <div> 
     {props.testData.map(profile=>{ 
      return ( <Card {...profile}/>);
      })} 
@@ -57,11 +55,20 @@ class App extends React.Component {
     {name: "Sophie Alpert", avatar_url: "https://avatars2.githubusercontent.com/u/6820?v=4", company: "Humu"},
     {name: "Sebastian Markbåge", avatar_url: "https://avatars2.githubusercontent.com/u/63648?v=4", company: "Facebook"},
 ];
+  
+  constructor(props){
+    super(props);
+    this.state={
+      testData:this.testData
+    }
+  }
+  
 	render() {
   	return (
     	<div>
     	  <div className="header">The GitHub Cards App</div>
-        <CardList  testData={this.testData}/>
+        <Form></Form>
+        <CardList  testData={this.state.testData}/>
     	</div>
     );
   }	
