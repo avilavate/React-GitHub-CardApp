@@ -4,7 +4,7 @@ import './App.css';
 class CardList extends React.Component {
   render() {
     return (<div>
-      {this.props.CardData.map(profile => <Card key={profile.id} testdata={profile} />)};
+      {this.props.CardData.map(profile => <Card key={profile.id} testdata={profile} />)}
     </div>);
   }
 }
