@@ -5,14 +5,13 @@ import './App.css';
 
 
 const CardList =(props)=> {
-
- 
  return(
    <div>
      <Form></Form>
- <Card {...props.testData[0]}/>
- <Card {...props.testData[1]}/>
- <Card {...props.testData[2]}/>
+     
+    {props.testData.map(profile=>{ 
+     return ( <Card {...profile}/>);
+     })} 
  </div>
  );
 }
